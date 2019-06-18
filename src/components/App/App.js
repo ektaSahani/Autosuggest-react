@@ -1,82 +1,82 @@
 import React from 'react';
 import Autosuggest from '../Autosuggest/Autosuggest';
 import Suggestions from '../Suggestions/Suggestions'
-import { CITIES } from '../../CITIES';
-import '../App/App.css'
+import '../App/App.scss'
+import Chips from '../Chips/Chips';
+import { connect } from 'react-redux';
+import { filterList, showList, updateCursor, setSelectedKey } from '../../actions';
 
-class App extends React.Component {
+export class App extends React.Component {
   state = {
-    options: CITIES,
     selectedSuggestion: '',
-    showList: false,
-    key: '',
-    cursor: 0
+    list:[]
   };
   handleChange = (value) => {
+    this.props.filterList(value);
+
     this.setState({
-      selectedSuggestion: value,
-      showList: true
+      selectedSuggestion: value
     });
-    this.filterOptions(value);
+    this.props.showList(true);
   };
   onSuggestionSelect = (value) => {
     this.setState({
       selectedSuggestion: value.label,
-      showList: false,
-      key: value.value,
-      cursor: 0
     });
-    this.filterOptions(value.label);
+    this.props.setSelectedKey(value.value);
+    this.props.updateCursor(0);
+    this.props.showList(false);
+    this.props.filterList(value.label);
+    this.setState(state=>{
+      const  list = [...state.list, state.selectedSuggestion ];
+      return {list};
+    });
+
   }
 
   onInputFocus = () => {
-    this.setState({ showList: true });
+    this.props.showList(true);
   }
 
-  filterOptions = (value) => {
-    let options;
-    if (value.length > 0) {
-      options = CITIES.filter((city) => {
-        return city.label.toLowerCase().includes(value.toLowerCase());
-      })
-    } else if (value.length === 0) {
-      options = CITIES;
-    }
-    this.setState({
-      options
-    });
-  }
   navigateThroughKeys = (e) => {
-    const { cursor, options } = this.state;
+    const { cursor, filterList } = this.props.state;
     if (e.keyCode === 38 && cursor > 0) {
-      this.setState(prevState => ({
-        cursor: prevState.cursor - 1
-      }));
-    } else if (e.keyCode === 40 && cursor < options.length - 1) {
-      this.setState(prevState => ({
-        cursor: prevState.cursor + 1
-      }));
+      this.props.updateCursor(cursor - 1);
+    } else if (e.keyCode === 40 && cursor < filterList.length - 1) {
+      this.props.updateCursor(cursor + 1);
     } else if (e.keyCode === 13) {
-      this.onSuggestionSelect(options[cursor])
+      this.onSuggestionSelect(filterList[cursor]);
     }
     if (document.querySelector('.active')) {
       document.querySelector('.active').scrollIntoView({ block: 'center' });
     }
   }
+  onChipsDelete=(i)=>
+  {
+    this.setState(state=>{
+     const list = state.list.filter((chip,j)=>i!==j);
+     return{list};
+    })
+  }
 
 
   render() {
-    const { cursor, selectedSuggestion, options, key } = this.state;
+    const { selectedSuggestion, list } = this.state;
     return (
-      <section>
-        <div className='wrapper'>
-          <h2 className='text-center'>Autosuggest</h2>
+      <section className='wrapper'>
+        <div className='wrapper_container'>
+          <h2 className='wrapper_container_heading--center'>Autosuggest</h2>
+          <Chips selectedSuggestion={selectedSuggestion} list={list} onChipsDelete={this.onChipsDelete}></Chips> 
           <Autosuggest onHandleChange={this.handleChange} selectedSuggestion={selectedSuggestion} onFocus={this.onInputFocus} onKeyDown={this.navigateThroughKeys}></Autosuggest>
-          {this.state.showList ? <Suggestions suggestionList={options} onSuggestionClick={this.onSuggestionSelect} selectedSuggestionKey={key} cursor={cursor} /> : ''}
+          {this.props.state && this.props.state.showList ? <Suggestions suggestionList={this.props.state.filterList} onSuggestionClick={this.onSuggestionSelect} selectedSuggestionKey={this.props.state.key} cursor={this.props.state.cursor} /> : ''}
         </div>
       </section>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return { state };
+};
 
-export default App;
+export default connect(mapStateToProps, { filterList, showList, updateCursor, setSelectedKey })(App);
+

@@ -1,14 +1,14 @@
 import React from 'react';
-import '../Suggestions/Suggestions.css'
+import '../Suggestions/Suggestions.scss'
 
 const Suggestions = (props) => {
     return (
-        <div className='suggestion-list'>
-            <ul>
+        <div className='suggestion'>
+            <ul className= 'suggestion_list'>
                 {props.suggestionList && props.suggestionList.map((suggestion, index) => {
-                    const selected = props.selectedSuggestionKey === suggestion.value ? 'selected' : '';
-                    const active = props.cursor === index ? 'active' : '';
-                    return <li key={suggestion.value}  className={selected || active} onClick={() => props.onSuggestionClick(suggestion)}>{suggestion.label}</li>
+                    const selected = props.selectedSuggestionKey === suggestion.value ? 'suggestion_list_item--selected' : '';
+                    const active = props.cursor === index ? 'suggestion_list_item--active' : '';
+                    return <li key={suggestion.value}  className={`${selected || active} suggestion_list_item `} onClick={() => props.onSuggestionClick(suggestion)}>{suggestion.label}</li>
                 })}
             </ul>
         </div>
