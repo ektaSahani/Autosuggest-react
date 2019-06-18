@@ -1,0 +1,19 @@
+.chipsConatiner {
+  margin-bottom: 20px;
+  .chips {
+    padding: 4px 8px;
+    border: 1px solid #2096f3;
+    background-color: #2096f3;
+    border-radius: 15px;
+    margin-right: 5px;
+    color: #fff;
+    font-size: 16px;
+    span {
+      cursor: pointer;
+      cursor: pointer;
+      padding: 2px 6px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+    }
+  }
+}

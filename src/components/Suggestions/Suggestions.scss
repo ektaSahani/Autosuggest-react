@@ -1,0 +1,27 @@
+.suggestion {
+    max-height: 486px;
+    overflow-y: auto;
+    margin-top: 15px;
+    &_list {
+        padding-left: 0px;
+        list-style-type: none;
+        margin-top: 0;
+        &_item {
+            border: 1px solid #eee;
+            padding: 10px 12px;
+            &--selected {
+                background-color: #2096f3;
+                font-weight: bold;
+                color: #fff;;
+            }
+            &--active{
+                background-color: #eee;
+            }
+        }
+    }
+}
+
+
+
+
+

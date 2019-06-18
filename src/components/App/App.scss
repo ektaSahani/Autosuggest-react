@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &_container {
+    padding: 20px 40px;
+    max-width: 500px;
+    &_heading--center {
+      text-align: center;
+    }
+  }
+}
