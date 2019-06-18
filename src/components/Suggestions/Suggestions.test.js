@@ -31,11 +31,11 @@ describe("Suggestions", ()=>{
     it("selected list item should have a classname", ()=>{
         const options = [{label: 'Afghanistan', value: 'AF'}];
         const suggestions = shallow(<Suggestions selectedSuggestionKey='AF' suggestionList={options}/>)
-        expect(suggestions.find('li').hasClass('selected')).toEqual(true);      
+        expect(suggestions.find('li').hasClass('suggestion_list_item--selected suggestion_list_item')).toEqual(true);      
     });
     it("selected list item should have a classname", ()=>{
         const options = [{label: 'Afghanistan', value: 'AF'}];
         const suggestions = shallow(<Suggestions cursor={0} suggestionList={options}/>)
-        expect(suggestions.find('li').hasClass('active')).toEqual(true);      
+        expect(suggestions.find('li').hasClass('suggestion_list_item--active suggestion_list_item')).toEqual(true);      
     })
 })

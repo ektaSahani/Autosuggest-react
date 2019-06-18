@@ -66,7 +66,7 @@ export class App extends React.Component {
       <section className='wrapper'>
         <div className='wrapper_container'>
           <h2 className='wrapper_container_heading--center'>Autosuggest</h2>
-          <Chips selectedSuggestion={selectedSuggestion} list={list} onChipsDelete={this.onChipsDelete}></Chips> 
+          <Chips list={list} onChipsDelete={this.onChipsDelete}></Chips> 
           <Autosuggest onHandleChange={this.handleChange} selectedSuggestion={selectedSuggestion} onFocus={this.onInputFocus} onKeyDown={this.navigateThroughKeys}></Autosuggest>
           {this.props.state && this.props.state.showList ? <Suggestions suggestionList={this.props.state.filterList} onSuggestionClick={this.onSuggestionSelect} selectedSuggestionKey={this.props.state.key} cursor={this.props.state.cursor} /> : ''}
         </div>
