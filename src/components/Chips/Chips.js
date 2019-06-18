@@ -6,7 +6,7 @@ const Chips = (props) => {
         <span className='chips' key={i}>{chip} <span onClick={()=>props.onChipsDelete(i)}>x</span></span>);
 
     return (
-        <div className='chipsConatiner'>
+        <div className='chipsContainer'>
             {chips}
         </div>
     );

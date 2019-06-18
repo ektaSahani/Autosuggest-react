@@ -51,13 +51,7 @@ export class App extends React.Component {
       document.querySelector('.active').scrollIntoView({ block: 'center' });
     }
   }
-  onChipsDelete=(i)=>
-  {
-    this.setState(state=>{
-     const list = state.list.filter((chip,j)=>i!==j);
-     return{list};
-    })
-  }
+  
 
 
   render() {

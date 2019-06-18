@@ -26,3 +26,10 @@ export const setSelectedKey = (value) => {
     }
 }
 
+export const deleteChips = (value)=>{
+    return{
+        type:'DELETE_CHIPS',
+        payload:value
+    }
+}
+

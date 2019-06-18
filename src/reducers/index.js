@@ -1,10 +1,12 @@
 import { CITIES } from '../CITIES';
+import { deleteChips } from '../actions';
 const initialState = {
     filterList: CITIES,
     selectedSuggestion: '',
     showList: false,
     key: '',
-    cursor: 0
+    cursor: 0,
+    list:[]
 }
 
 const filterOptions = (value) => {
@@ -18,7 +20,14 @@ const filterOptions = (value) => {
     }
     return options;
 };
-
+//Confusion spotted 
+onChipsDelete=(i)=>
+  {
+    this.setState(state=>{
+     const list = state.list.filter((chip,j)=>i!==j);
+     return{list};
+    })
+  }
 
 const Reducer = (state = initialState, action) => {
     if (action.type === 'FILTER_LIST') {
@@ -45,6 +54,14 @@ const Reducer = (state = initialState, action) => {
         return {
             ...state,
             key: action.payload
+        }
+    }
+
+    if(action.type === 'DELETE_CHIPS'){
+        const updatedList = deleteChips(action.payload)
+        return{
+            ...state,
+            updatedList
         }
     }
 }
