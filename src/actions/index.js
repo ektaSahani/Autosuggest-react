@@ -33,3 +33,10 @@ export const deleteChips = (value)=>{
     }
 }
 
+export const addChips = (value)=>{
+    return{
+        type:'ADD_CHIPS',
+        payload:value
+    }
+}
+

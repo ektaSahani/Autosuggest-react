@@ -4,7 +4,7 @@ import Suggestions from '../Suggestions/Suggestions'
 import '../App/App.scss'
 import Chips from '../Chips/Chips';
 import { connect } from 'react-redux';
-import { filterList, showList, updateCursor, setSelectedKey } from '../../actions';
+import { filterList, showList, updateCursor, setSelectedKey, addChips, deleteChips  } from '../../actions';
 
 export class App extends React.Component {
   state = {
@@ -27,10 +27,11 @@ export class App extends React.Component {
     this.props.updateCursor(0);
     this.props.showList(false);
     this.props.filterList(value.label);
-    this.setState(state=>{
-      const  list = [...state.list, state.selectedSuggestion ];
-      return {list};
-    });
+    // this.setState(state=>{
+    //   const  list = [...state.list, state.selectedSuggestion ];
+    //   return {list};
+    // });
+    this.props.state.addChips(this.state.selectedSuggestion);
 
   }
 
@@ -60,7 +61,7 @@ export class App extends React.Component {
       <section className='wrapper'>
         <div className='wrapper_container'>
           <h2 className='wrapper_container_heading--center'>Autosuggest</h2>
-          <Chips list={list} onChipsDelete={this.onChipsDelete}></Chips> 
+          <Chips list={list} onChipsDelete={this.props.state.deleteChips}></Chips> 
           <Autosuggest onHandleChange={this.handleChange} selectedSuggestion={selectedSuggestion} onFocus={this.onInputFocus} onKeyDown={this.navigateThroughKeys}></Autosuggest>
           {this.props.state && this.props.state.showList ? <Suggestions suggestionList={this.props.state.filterList} onSuggestionClick={this.onSuggestionSelect} selectedSuggestionKey={this.props.state.key} cursor={this.props.state.cursor} /> : ''}
         </div>
@@ -72,5 +73,5 @@ const mapStateToProps = (state) => {
   return { state };
 };
 
-export default connect(mapStateToProps, { filterList, showList, updateCursor, setSelectedKey })(App);
+export default connect(mapStateToProps, { filterList, showList, updateCursor, setSelectedKey, addChips,deleteChips })(App);
 

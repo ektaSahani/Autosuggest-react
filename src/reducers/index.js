@@ -1,5 +1,5 @@
 import { CITIES } from '../CITIES';
-import { deleteChips } from '../actions';
+
 const initialState = {
     filterList: CITIES,
     selectedSuggestion: '',
@@ -8,6 +8,7 @@ const initialState = {
     cursor: 0,
     list:[]
 }
+const list =[];
 
 const filterOptions = (value) => {
     let options;
@@ -21,13 +22,16 @@ const filterOptions = (value) => {
     return options;
 };
 //Confusion spotted 
-onChipsDelete=(i)=>
+const onChipsDelete=(value)=>
   {
-    this.setState(state=>{
-     const list = state.list.filter((chip,j)=>i!==j);
-     return{list};
-    })
+     const updatedList = list.filter((chip)=>chip!==value);
+     return{updatedList};
   }
+
+const onChipsAdd=(selectedSuggestion)=>{
+        const  list = [...list, selectedSuggestion ];
+        return {list};
+}
 
 const Reducer = (state = initialState, action) => {
     if (action.type === 'FILTER_LIST') {
@@ -58,10 +62,18 @@ const Reducer = (state = initialState, action) => {
     }
 
     if(action.type === 'DELETE_CHIPS'){
-        const updatedList = deleteChips(action.payload)
+        const updatedList = onChipsDelete(action.payload)
         return{
             ...state,
             updatedList
+        }
+    }
+
+    if(action.type === 'ADD_CHIPS'){
+        const list = onChipsAdd(action.payload)
+        return{
+            ...state,
+            list
         }
     }
 }
